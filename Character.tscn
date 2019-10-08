@@ -4,7 +4,7 @@
 [ext_resource path="res://icon.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 34, 8 )
+extents = Vector2( 32, 38 )
 
 [node name="Character" type="KinematicBody2D"]
 position = Vector2( -0.184036, -0.736099 )
@@ -17,6 +17,6 @@ id = 1
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.184021, 26.4997 )
+position = Vector2( 0.184036, 0.736099 )
 scale = Vector2( 1.00686, 0.861913 )
 shape = SubResource( 1 )

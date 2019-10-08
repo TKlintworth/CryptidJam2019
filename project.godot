@@ -19,6 +19,10 @@ config/name="lizardman"
 run/main_scene="res://Level.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+PlayerVariables="*res://PlayerVariables.gd"
+
 [input]
 
 right_1={

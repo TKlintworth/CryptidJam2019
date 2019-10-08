@@ -10,7 +10,7 @@ var ownerName = "Nobody"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#Tell global script this control node exists
-	instantiate_globally()
+	PlayerVariables.addControlPoint(self)
 	#When first entering, pick score between lower and upper and set the control point label to this value
 	set_score(pick_score(lower, upper))
 
@@ -27,7 +27,6 @@ func set_score(score):
 	$CollisionShape2D/ScoreAmount.text = str(score)
 
 func _on_ControlPoint_body_shape_entered(body_id: int, body: PhysicsBody2D, body_shape: int, area_shape: int) -> void:
-	print(body_id, " ", body, " ", body_shape, " ", area_shape)
 	#Sends the intersecting physics bodys name to capture function to determine if the control point should
 	#transfer ownership
 	capture_point(body.name)
@@ -43,5 +42,5 @@ func capture_point(capturerName):
 	else:
 		pass
 
-func get_ownerName():
+func getOwnerName():
 	return ownerName

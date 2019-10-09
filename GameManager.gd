@@ -1,8 +1,10 @@
 extends Node
 
+
+var current_scene = null
 # 3 minutes per round
 # 5 rounds
-export var secondsInRound = 180
+export var secondsInRound = 3
 export var rounds = 5
 
 #Start at round 1
@@ -11,6 +13,12 @@ var currentRound = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#Get current scene
+	var root = get_tree().get_root()
+	current_scene = root.get_child(root.get_child_count() - 1)
+	
+	#Start round tracker at 1
+	current_scene.get_node("GUI/Round").adjust(1)
 	#Call function that runs rounds
 	runRounds()
 	
@@ -28,10 +36,12 @@ func resolve_round():
 	PlayerVariables.player2Points = 0
 	
 	#Reset player locations #TODO temporary reloading scene
-	get_tree().reload_current_scene()
+	#get_tree().reload_current_scene()
 	
 	#Increment round
+	current_scene.get_node("GUI/Round").adjust(1)
 	currentRound += 1
+	
 
 #Manages round transitions 
 func runRounds():

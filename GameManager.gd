@@ -2,10 +2,10 @@ extends Node
 
 # 3 minutes per round
 # 5 rounds
-export var secondsInRound = 3
+export var secondsInRound = 180
 export var rounds = 5
 
-#Start at round 1 
+#Start at round 1
 var currentRound = 1
 
 
@@ -24,6 +24,8 @@ func resolve_round():
 		PlayerVariables.player2Score += 1
 	#Reset control points here
 	PlayerVariables.controlPoints = []
+	PlayerVariables.player1Points = 0
+	PlayerVariables.player2Points = 0
 	
 	#Reset player locations #TODO temporary reloading scene
 	get_tree().reload_current_scene()

@@ -9,9 +9,6 @@ var player2Points = 0
 var player1Score = 0
 var player2Score = 0
 
-
-var ownedByPlayer1 = []
-var ownedByPlayer2 = []
 var controlPoints = []
 
 #Amount of seconds to wait before accumulating points
@@ -44,6 +41,3 @@ func addControlPoint(point):
 	controlPoints.append(point)
 	print(controlPoints)
 	
-
-func currentScore():
-	pass

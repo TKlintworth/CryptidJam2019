@@ -4,7 +4,7 @@ extends Node
 var current_scene = null
 # 3 minutes per round
 # 5 rounds
-export var secondsInRound = 60
+export var secondsInRound = 10
 export var rounds = 5
 
 #Start at round 1
@@ -36,6 +36,8 @@ func resolve_round():
 	PlayerVariables.controlPoints = []
 	PlayerVariables.player1Points = 0
 	PlayerVariables.player2Points = 0
+	current_scene.get_node("GUI/Player1Score").reset()
+	current_scene.get_node("GUI/Player2Score").reset()
 	#Send players back to their spawns
 	current_scene.get_node("Player1").position = current_scene.get_node("Player1Spawn").position
 	current_scene.get_node("Player2").position = current_scene.get_node("Player2Spawn").position

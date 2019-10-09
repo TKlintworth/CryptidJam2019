@@ -1,7 +1,7 @@
 extends Node
 
-#How often to accumulate points from control points
-#var tick = tickTimer(tickTime) 
+#export var pointsToWinRound = 1000
+#export var roundSeconds = 180
 
 #Points are for within round, score is round score
 var player1Points = 0
@@ -19,6 +19,7 @@ var tickTime = 3
 #Is the game still going
 var gameNotFinished = true
 
+#Add points to total points based on control points owned
 func scoreAccumulator():
 	for point in controlPoints:
 		if point.getOwnerName() == "Player1":

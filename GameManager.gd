@@ -4,7 +4,7 @@ extends Node
 var current_scene = null
 # 3 minutes per round
 # 5 rounds
-export var secondsInRound = 3
+export var secondsInRound = 60
 export var rounds = 5
 
 #Start at round 1
@@ -30,13 +30,15 @@ func resolve_round():
 		PlayerVariables.player1Score += 1
 	if PlayerVariables.player2Score > PlayerVariables.player1Points:
 		PlayerVariables.player2Score += 1
+		
+	#All this could go in a resetLevel function or something
 	#Reset control points here
 	PlayerVariables.controlPoints = []
 	PlayerVariables.player1Points = 0
 	PlayerVariables.player2Points = 0
-	
-	#Reset player locations #TODO temporary reloading scene
-	#get_tree().reload_current_scene()
+	#Send players back to their spawns
+	current_scene.get_node("Player1").position = current_scene.get_node("Player1Spawn").position
+	current_scene.get_node("Player2").position = current_scene.get_node("Player2Spawn").position
 	
 	#Increment round
 	current_scene.get_node("GUI/Round").adjust(1)
@@ -47,6 +49,8 @@ func resolve_round():
 func runRounds():
 	#Game Loop
 	while(currentRound < rounds):
+		#Start the timer that displays remaining time in round
+		current_scene.get_node("GUI/TimeLabel/Timer").start(secondsInRound)
 		yield(get_tree().create_timer(secondsInRound), "timeout")
 		resolve_round()
 		print("Current round: ", currentRound)

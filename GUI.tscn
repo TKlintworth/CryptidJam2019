@@ -40,3 +40,19 @@ text = "000"
 script = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="TimeLabel"]
+
+[node name="Player1Points" parent="." instance=ExtResource( 1 )]
+margin_left = -10.0
+margin_top = 530.0
+margin_right = 90.0
+margin_bottom = 570.0
+text = "Points:"
+paddingLength = 1
+
+[node name="Player2Points" parent="." instance=ExtResource( 1 )]
+margin_left = 860.0
+margin_top = 530.0
+margin_right = 960.0
+margin_bottom = 570.0
+text = "Points:"
+paddingLength = 1

@@ -21,7 +21,7 @@ func _ready() -> void:
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
-	#Start round tracker at 1
+	#Start round tracker at 1 
 	current_scene.get_node("GUI/Round").adjust(1)
 	#Call function that runs rounds
 	runRounds()
@@ -32,8 +32,10 @@ func _ready() -> void:
 func resolve_round():
 	if PlayerVariables.player1Points > PlayerVariables.player2Points:
 		PlayerVariables.player1Score += 1
-	if PlayerVariables.player2Score > PlayerVariables.player1Points:
+		current_scene.get_node("GUI/Player1Points").adjust(1)
+	if PlayerVariables.player2Points > PlayerVariables.player1Points:
 		PlayerVariables.player2Score += 1
+		current_scene.get_node("GUI/Player2Points").adjust(1)
 		
 	#All this could go in a resetLevel function or something
 	#Reset control points here (calls function to set owner names to "Nobody" and set new random score value)
@@ -66,7 +68,7 @@ func runRounds():
 		print("Current round: ", currentRound)
 	if PlayerVariables.player2Score > PlayerVariables.player1Score:
 		gameEnd("Player2")
-	if PlayerVariables.player1Score > PlayerVariables.player2Score:
+	elif PlayerVariables.player1Score > PlayerVariables.player2Score:
 		gameEnd("Player1")
 	else:
 		gameEnd("Draw")

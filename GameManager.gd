@@ -4,8 +4,12 @@ extends Node
 var current_scene = null
 # 3 minutes per round
 # 5 rounds
+# Time countdown between rounds
+# Time it takes for a player to respawn
 export var secondsInRound = 10
 export var rounds = 5
+export var timeBetweenRounds = 4
+export var spawnTime = 3
 
 #Start at round 1
 var currentRound = 1
@@ -32,8 +36,8 @@ func resolve_round():
 		PlayerVariables.player2Score += 1
 		
 	#All this could go in a resetLevel function or something
-	#Reset control points here
-	PlayerVariables.controlPoints = []
+	#Reset control points here (calls function to set owner names to "Nobody" and set new random score value)
+	PlayerVariables.resetControlPoints()
 	PlayerVariables.player1Points = 0
 	PlayerVariables.player2Points = 0
 	current_scene.get_node("GUI/Player1Score").reset()
@@ -46,6 +50,10 @@ func resolve_round():
 	current_scene.get_node("GUI/Round").adjust(1)
 	currentRound += 1
 	
+	# Here can put the functionality that pauses the round 
+	# and shows a countdown to begin the new round
+	print("display round countdown 3,2,1")
+	
 
 #Manages round transitions 
 func runRounds():
@@ -57,17 +65,42 @@ func runRounds():
 		resolve_round()
 		print("Current round: ", currentRound)
 	if PlayerVariables.player2Score > PlayerVariables.player1Score:
-		print("Player 2 wins")
 		gameEnd("Player2")
 	if PlayerVariables.player1Score > PlayerVariables.player2Score:
-		print("Player 1 wins")
 		gameEnd("Player1")
 	else:
-		print("Draw")
 		gameEnd("Draw")
 
+#Shows winner and transition appropriately
 func gameEnd(whoWon):
 	#Put transition to appropriate game end screen
 	#get_tree().change_scene("GameComplete.tscn")
+	match whoWon:
+		"Player1":
+			print("Player 1 wins")
+		"Player2":
+			print("Player 2 wins")
+		_:
+			print("Draw")
 	pass
+
+#Sends the passed in player back to their spawn point
+func playerDeath(player):
+	var spawn = str(player, "Spawn")
+	
+	print(player, " died.")
+	
+	# Remove the player in the most janky way possible (send to bottom of map to fall until location reset :D)
+	current_scene.get_node(player).position = current_scene.get_node("LevelBoundaries/Bottom").position
+	# Don't respawn player if time left in round is less than respawn time, to prevent a double spawn after new round starts
+	if (int(current_scene.get_node("GUI/TimeLabel").timeLeft) < spawnTime):
+		pass
+	else:
+		yield(get_tree().create_timer(spawnTime), "timeout")
+		current_scene.get_node(player).position = current_scene.get_node(spawn).position
+
+
+
+
+
 

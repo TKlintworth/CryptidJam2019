@@ -44,3 +44,8 @@ func capture_point(capturerName):
 
 func getOwnerName():
 	return ownerName
+
+#Resets name and score value
+func reset():
+	ownerName = "Nobody"
+	set_score(pick_score(lower, upper))

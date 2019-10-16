@@ -12,27 +12,29 @@ font_data = ExtResource( 2 )
 z_index = 1000
 
 [node name="Player1Score" parent="." instance=ExtResource( 1 )]
+margin_left = -10.0
+margin_right = 90.0
 paddingLength = 4
 
 [node name="Player2Score" parent="." instance=ExtResource( 1 )]
-margin_left = 800.0
-margin_right = 900.0
+margin_left = 860.0
+margin_right = 960.0
 text = "P2 Score: "
 paddingLength = 4
 
 [node name="Round" parent="." instance=ExtResource( 1 )]
-margin_left = 440.0
-margin_top = 10.0
-margin_right = 540.0
-margin_bottom = 50.0
+margin_left = 430.0
+margin_top = 0.0
+margin_right = 530.0
+margin_bottom = 40.0
 text = "Round: "
 paddingLength = 1
 
 [node name="TimeLabel" type="Label" parent="."]
 margin_left = 500.0
-margin_top = 50.0
+margin_top = 30.0
 margin_right = 540.0
-margin_bottom = 64.0
+margin_bottom = 74.0
 custom_fonts/font = SubResource( 1 )
 text = "000"
 script = ExtResource( 3 )

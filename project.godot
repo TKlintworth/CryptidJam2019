@@ -24,6 +24,11 @@ config/icon="res://icon.png"
 PlayerVariables="*res://PlayerVariables.gd"
 GameManager="*res://GameManager.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
+
 [input]
 
 right_1={

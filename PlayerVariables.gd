@@ -36,16 +36,22 @@ func _ready():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
-	
+	# Every tickTime seconds, add up the amount of points appropriate based on ctrl points controlled
 	controlPoints = []
 	while(gameNotFinished):
 		yield(get_tree().create_timer(tickTime), "timeout")
 		scoreAccumulator()
-		
-	
+
+
+##### THESE COULD BE MOVED TO GLOBAL CONTROL POINT MANAGER SCRIPT ######
+
 # Called when the node enters the scene tree for the first time.
-#Add all control points in the scene to global list
+# Add all control points in the scene to global list
 func addControlPoint(point):
 	controlPoints.append(point)
 	print(controlPoints)
-	
+
+# Resets all the control points owners to "Nobody"
+func resetControlPoints():
+	for point in controlPoints:
+		point.reset()

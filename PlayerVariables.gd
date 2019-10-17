@@ -26,7 +26,7 @@ func _ready():
 	# Every tickTime seconds, add up the amount of points appropriate based on ctrl points controlled
 	#controlPoints = []
 	
-func runGame():
+func runScoreAccumulator():
 	while(gameNotFinished):
 		yield(get_tree().create_timer(tickTime), "timeout")
 		scoreAccumulator()

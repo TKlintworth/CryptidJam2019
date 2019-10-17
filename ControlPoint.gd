@@ -30,7 +30,7 @@ func _on_ControlPoint_body_shape_entered(body_id: int, body: PhysicsBody2D, body
 	#Sends the intersecting physics bodys name to capture function to determine if the control point should
 	#transfer ownership
 	capture_point(body.name)
-	$CollisionShape2D/TextureProgress.value = 100
+	#$CollisionShape2D/TextureProgress.value = 100
 
 #Takes a parameter capturerName that either becomes the new owner of the control point or just passes through
 func capture_point(capturerName):

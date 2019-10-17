@@ -1,14 +1,13 @@
 extends Node
 
-
 var current_scene = null
 
 # 3 minutes per round
 # 5 rounds
 # Time countdown between rounds
 # Time it takes for a player to respawn
-export var secondsInRound = 10
-export var rounds = 5
+export var secondsInRound = 5
+export var rounds = 2
 export var timeBetweenRounds = 4
 export var spawnTime = 3
 
@@ -20,11 +19,7 @@ var currentRound = 1
 func _ready() -> void:
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
-	
-	
-	#Call function that runs rounds
-	#runRounds()
-	
+
 
 #Need to add to this to actually reset the round
 func resolve_round():
@@ -55,9 +50,9 @@ func resolve_round():
 	print("display round countdown 3,2,1")
 	
 
-#Manages round transitions 
+#Manages round transitions
 func runRounds():
-	PlayerVariables.runGame()
+	PlayerVariables.runScoreAccumulator()
 	#Start round tracker at 1 
 	current_scene.get_node("GUI/Round").adjust(1)
 	#Game Loop
@@ -76,16 +71,28 @@ func runRounds():
 
 #Shows winner and transition appropriately
 func gameEnd(whoWon):
-	#Put transition to appropriate game end screen
-	#get_tree().change_scene("GameComplete.tscn")
+	# Reset current round and remove control points from previous game
+	currentRound = 1
+	PlayerVariables.controlPoints = []
+	# Reset player scores after the game ends
+	PlayerVariables.player1Score = 0
+	PlayerVariables.player2Score = 0
+	# Transition to appropriate game end screen
+	# Ends the game loop, the yield allows it to end I think. Without it there is a crash w/ socket error 10054
+	PlayerVariables.gameNotFinished = false
+	yield(get_tree().create_timer(1.0), "timeout")
+	goto_scene("res://GameEnd.tscn")
+	yield(get_tree().create_timer(1.0), "timeout")
 	match whoWon:
 		"Player1":
 			print("Player 1 wins")
+			current_scene.get_node("CenterContainer/Text").set_text("Player 1 wins!")
 		"Player2":
 			print("Player 2 wins")
+			current_scene.get_node("CenterContainer/Text").set_text("Player 2 wins!")
 		_:
 			print("Draw")
-	pass
+			current_scene.get_node("CenterContainer/Text").set_text("Draw!")
 
 #Sends the passed in player back to their spawn point
 func playerDeath(player):
@@ -103,6 +110,18 @@ func playerDeath(player):
 		current_scene.get_node(player).position = current_scene.get_node(spawn).position
 
 
+# Work in progress for resetting level and all attached logic
+func resetLevel():
+	PlayerVariables.gameNotFinished = true
+	currentRound = 1
+	PlayerVariables.controlPoints = []
+	PlayerVariables.player1Score = 0
+	PlayerVariables.player2Score = 0
+	PlayerVariables.resetControlPoints()
+	PlayerVariables.player1Points = 0
+	PlayerVariables.player2Points = 0
+	current_scene.get_node("GUI/Player1Score").reset()
+	current_scene.get_node("GUI/Player2Score").reset()
 
 ### These from scene Docs ####
 
@@ -133,7 +152,7 @@ func _deferred_goto_scene(path):
     get_tree().get_root().add_child(current_scene)
 
     # Optionally, to make it compatible with the SceneTree.change_scene() API.
-    get_tree().set_current_scene(current_scene)
+    #get_tree().set_current_scene(current_scene)
 
 
 

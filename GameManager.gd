@@ -2,6 +2,7 @@ extends Node
 
 
 var current_scene = null
+
 # 3 minutes per round
 # 5 rounds
 # Time countdown between rounds
@@ -17,18 +18,15 @@ var currentRound = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#Get current scene
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
-	#Start round tracker at 1 
-	current_scene.get_node("GUI/Round").adjust(1)
+	
 	#Call function that runs rounds
-	runRounds()
+	#runRounds()
 	
 
 #Need to add to this to actually reset the round
-#TODO
 func resolve_round():
 	if PlayerVariables.player1Points > PlayerVariables.player2Points:
 		PlayerVariables.player1Score += 1
@@ -59,6 +57,9 @@ func resolve_round():
 
 #Manages round transitions 
 func runRounds():
+	PlayerVariables.runGame()
+	#Start round tracker at 1 
+	current_scene.get_node("GUI/Round").adjust(1)
 	#Game Loop
 	while(currentRound < rounds):
 		#Start the timer that displays remaining time in round
@@ -103,6 +104,36 @@ func playerDeath(player):
 
 
 
+### These from scene Docs ####
+
+func goto_scene(path):
+    # This function will usually be called from a signal callback,
+    # or some other function in the current scene.
+    # Deleting the current scene at this point is
+    # a bad idea, because it may still be executing code.
+    # This will result in a crash or unexpected behavior.
+
+    # The solution is to defer the load to a later time, when
+    # we can be sure that no code from the current scene is running:
+
+    call_deferred("_deferred_goto_scene", path)
+
+
+func _deferred_goto_scene(path):
+    # It is now safe to remove the current scene
+    current_scene.free()
+
+    # Load the new scene.
+    var s = ResourceLoader.load(path)
+
+    # Instance the new scene.
+    current_scene = s.instance()
+
+    # Add it to the active scene, as child of root.
+    get_tree().get_root().add_child(current_scene)
+
+    # Optionally, to make it compatible with the SceneTree.change_scene() API.
+    get_tree().set_current_scene(current_scene)
 
 
 

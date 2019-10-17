@@ -24,7 +24,7 @@ rotation = 1.57079
 shape = SubResource( 1 )
 
 [node name="Top" type="CollisionShape2D" parent="."]
-position = Vector2( -30, -20 )
+position = Vector2( -30, -250 )
 rotation = 3.14159
 shape = SubResource( 1 )
 [connection signal="body_shape_entered" from="." to="." method="_on_LevelBoundaries_body_shape_entered"]

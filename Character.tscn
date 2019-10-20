@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Character.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -6,17 +6,40 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 38 )
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 32 )
+
 [node name="Character" type="KinematicBody2D"]
 position = Vector2( -0.184036, -0.736099 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 id = 1
 
 [node name="Pivot" type="Position2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Body" type="Sprite" parent="Pivot"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.184036, 0.736099 )
 scale = Vector2( 1.00686, 0.861913 )
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TrapShadow" type="Area2D" parent="."]
+position = Vector2( 65, 0.736 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrapShadow"]
+shape = SubResource( 2 )
+[connection signal="area_entered" from="TrapShadow" to="." method="_on_TrapShadow_area_entered"]
+[connection signal="area_exited" from="TrapShadow" to="." method="_on_TrapShadow_area_exited"]

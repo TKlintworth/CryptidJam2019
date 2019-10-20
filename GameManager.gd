@@ -6,7 +6,7 @@ var current_scene = null
 # 5 rounds
 # Time countdown between rounds
 # Time it takes for a player to respawn
-export var secondsInRound = 5
+export var secondsInRound = 60
 export var rounds = 2
 export var timeBetweenRounds = 4
 export var spawnTime = 3
@@ -42,7 +42,8 @@ func resolve_round():
 	current_scene.get_node("Player2").position = current_scene.get_node("Player2Spawn").position
 	
 	#Increment round
-	current_scene.get_node("GUI/Round").adjust(1)
+	if currentRound < rounds:
+		current_scene.get_node("GUI/Round").adjust(1)
 	currentRound += 1
 	
 	# Here can put the functionality that pauses the round 
@@ -56,12 +57,12 @@ func runRounds():
 	#Start round tracker at 1 
 	current_scene.get_node("GUI/Round").adjust(1)
 	#Game Loop
-	while(currentRound < rounds):
+	while(currentRound <= rounds):
 		#Start the timer that displays remaining time in round
 		current_scene.get_node("GUI/TimeLabel/Timer").start(secondsInRound)
 		yield(get_tree().create_timer(secondsInRound), "timeout")
 		resolve_round()
-		print("Current round: ", currentRound)
+		#print("Current round: ", currentRound)
 	if PlayerVariables.player2Score > PlayerVariables.player1Score:
 		gameEnd("Player2")
 	elif PlayerVariables.player1Score > PlayerVariables.player2Score:

@@ -19,9 +19,11 @@ lower = 3
 upper = 15
 
 [node name="Player2" parent="." instance=ExtResource( 3 )]
+editor/display_folded = false
 position = Vector2( 920, 490 )
 
 [node name="Player1" parent="." instance=ExtResource( 4 )]
+editor/display_folded = false
 position = Vector2( 122, 30.7361 )
 
 [node name="Wall" parent="." instance=ExtResource( 5 )]
